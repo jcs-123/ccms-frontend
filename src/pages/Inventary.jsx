@@ -34,7 +34,7 @@ useEffect(() => {
   const fetchSpocs = async () => {
     try {
       // Make the GET request using axios
-      const response = await axios.get('http://localhost:4000/get-spoc-users');
+      const response = await axios.get('https://ccms-server.onrender.com/get-spoc-users');
       
       // Assuming the response contains an array of SPOC names
       setSpocOptions(response.data); // Set fetched SPOC names in state

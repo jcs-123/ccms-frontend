@@ -40,7 +40,7 @@ function Ccassignedreports() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/get-spoc-users")
+      .get("https://ccms-server.onrender.com/get-spoc-users")
       .then((res) => {
         setSpocOptions(res.data.map((u) => u.name));
       })
@@ -49,7 +49,7 @@ function Ccassignedreports() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/get-cccomplaint")
+      .get("https://ccms-server.onrender.com/get-cccomplaint")
       .then((res) => {
         setReports(Array.isArray(res.data) ? res.data : []);
       })
@@ -59,7 +59,7 @@ function Ccassignedreports() {
   useEffect(() => {
     setLoadingInventory(true);
     axios
-      .get("http://localhost:4000/get-data")
+      .get("https://ccms-server.onrender.com/get-data")
       .then((res) => {
         setInventory(Array.isArray(res.data) ? res.data : []);
         setErrorInventory(null);
@@ -188,7 +188,7 @@ const visibleReports = reports.filter((item) => {
 
     // Replace with your real endpoint:
     axios
-      .post("http://localhost:4000/update-cc-remarks", payload)
+      .post("https://ccms-server.onrender.com/update-cc-remarks", payload)
       .then(() => {
         alert("Remarks updated successfully.");
         setShowRemarkModal(false);

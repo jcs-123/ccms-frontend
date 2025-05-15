@@ -31,7 +31,7 @@ function Header() {
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
     try {
-      const res = await fetch(`http://localhost:4000/spoc/edit/${storedUser._id}`, {
+      const res = await fetch(`https://ccms-server.onrender.com/spoc/edit/${storedUser._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password: hashedNewPassword }),

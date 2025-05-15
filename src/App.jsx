@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Dashboard from './pages/Dashboard';
@@ -12,16 +12,15 @@ import Ccassignedreports from './pages/Ccassignedreports';
 
 function App() {
   const location = useLocation();
+  const user = JSON.parse(localStorage.getItem('loggedUser'));
+  const isLoginPage = location.pathname === '/Login';
 
   return (
     <>
-      {/* Only render Header and Sidebar if the route is not '/Login' */}
-      {location.pathname !== '/Login' && <Header />}
+      {!isLoginPage && user && <Header />}
 
-      {/* Apply the main layout only for non-login pages */}
-      {location.pathname !== '/Login' ? (
+      {!isLoginPage && user ? (
         <div className="main-layout">
-          {/* Only render Sidebar if the route is not '/Login' */}
           <Sidebar />
           <div className="content-area">
             <Routes>
@@ -30,15 +29,15 @@ function App() {
               <Route path="/addhardware" element={<Addithardware />} />
               <Route path="/ithardwarecomplaintreport" element={<Ithardwarecomplaintreport />} />
               <Route path="/Addspoc" element={<AddSpoc />} />
-              <Route path="/Assignedreport" element={<Ccassignedreports/>} />
-
+              <Route path="/Assignedreport" element={<Ccassignedreports />} />
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </div>
         </div>
       ) : (
-        // For the Login page, just render the login form without the layout
         <Routes>
-          <Route path="/Login" element={<Login />} />
+          <Route path="/Login" element={user ? <Navigate to="/" /> : <Login />} />
+          <Route path="*" element={<Navigate to="/Login" />} />
         </Routes>
       )}
     </>

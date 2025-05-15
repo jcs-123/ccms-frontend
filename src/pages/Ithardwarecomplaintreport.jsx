@@ -48,7 +48,7 @@ function Ithardwarecomplaintreport() {
 
 useEffect(() => {
     axios
-      .get("http://localhost:4000/get-cccomplaint")
+      .get("https://ccms-server.onrender.com/get-cccomplaint")
       .then((res) => {
         setComplaints(res.data);
         setLoading(false);
@@ -63,7 +63,7 @@ useEffect(() => {
 
   const fetchSpocs = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/get-spoc-users');
+      const response = await axios.get('https://ccms-server.onrender.com/get-spoc-users');
       const options = response.data.map(spoc => ({
         value: spoc.name,
         label: spoc.name
