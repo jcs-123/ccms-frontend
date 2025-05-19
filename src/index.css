@@ -122,11 +122,13 @@ html, body {
 /* LOGIN PAGE */
 /* LOGIN PAGE */
 .login-page {
-  background: linear-gradient(135deg, #005f83 0%, #007ba7 100%);
+  background: url('./assets/login.jpg') no-repeat center center;
+  background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 
 .login-form {
   background: #fff;

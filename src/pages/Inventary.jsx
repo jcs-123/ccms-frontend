@@ -24,7 +24,20 @@ const [authChecked, setAuthChecked] = useState(false);
 
 
   const brandOptions = ['ACER POWER SERIES', 'ACER VERSION', 'INTEL NUC KIT', 'DELL/HCL UPGRADED PC S','ASSEMBLED','LENOVO THINK CENTRE EDGE 72','DELL OPTIPLEX 755','HCL PRO BL','HP COMPAQ DX2480','HP ELITE 7100 MT','HCL','HP ALL IN ONE','DELL T30','DELL OPTIPLEX 5060 MINI TOWER','DELL OPTIPLEX 3060 MONI TOWER','DELL OPTIPLEX 390','HP LAP 15-AC 122TU','TOSIBA SATELLITE','MSI NOTEBOOK','HP LAP 15-AC 184TU','HP LAP 15-BS576TX','ACER LAP N16C1 (AspireES1-572)','DELL LATITUDE 74002'];
-const departmentOptions = ['Computer Centre', 'Research And Development', 'Office', 'TBI'];
+const departmentOptions = [
+  'CSE',
+  'CC',
+  'Library',
+  'EEE',
+  'ECE',
+  'ME',
+  'MR',
+  'CY',
+  'AD',
+  'TBI',
+  'Office',
+  'Research And Development'
+];
 const amcVendorOptions = ['HALCYON', 'ACCEL', 'ACER/PC CLINIC ','ARTECH','FRONTIER','HP','PC CLINIC','TELECOM','VERTEX','ZETA'];
 const osOptions = ['Windows 10', 'Windows 7', 'Windows XP','Windows 8','Ubuntu 16','Ubuntu 18','JOSS','TCS ion'];
 const [spocOptions, setSpocOptions] = useState([]);
@@ -285,10 +298,19 @@ const handleUpdate = async () => {
                   onChange={(e) => handleFilterChange('department', e.target.value)}
                 >
                   <option value="">--- select ---</option>
-                  <option>TBI</option>
-                  <option>Office</option>
-                  <option>Research And Development</option>
-                  <option>Computer Centre</option>
+             <option>CSE</option>
+<option>CC</option>
+<option>Library</option>
+<option>EEE</option>
+<option>ECE</option>
+<option>ME</option>
+<option>MR</option>
+<option>CY</option>
+<option>AD</option>
+<option>TBI</option>
+<option>Office</option>
+<option>Research And Development</option>
+
                 </Form.Select>
               </Form.Group>
             </Col>

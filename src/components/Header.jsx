@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Container, Navbar, Nav, Button, Image, Modal, Form } from 'react-bootstrap';
 import bcrypt from 'bcryptjs';
 import { BiLogOut } from 'react-icons/bi';
-
+import logo from '../assets/logo.png'
+import { useNavigate } from 'react-router-dom';
 function Header() {
   const [showModal, setShowModal] = useState(false);
   const [newPassword, setNewPassword] = useState('');
@@ -10,7 +11,12 @@ function Header() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [userName, setUserName] = useState('');
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem('loggedUser');
+    navigate('/Login');
+  };
   useEffect(() => {
     const storedUser = localStorage.getItem('loggedUser');
     if (storedUser) {
@@ -64,7 +70,7 @@ function Header() {
         <Container fluid>
           <Navbar.Brand href="#">
             <Image
-              src="https://proccms.jecc.ac.in/assets/images/logo.png"
+              src={logo}
               alt="Logo"
               height="40"
               style={{ backgroundColor: 'white', borderRadius: '4px' }}
@@ -87,17 +93,14 @@ function Header() {
               >
                 Reset Password
               </Button>
-              <Button
-                variant="light"
-                size="sm"
-                className="d-flex align-items-center"
-                onClick={() => {
-                  localStorage.removeItem('loggedUser');
-                  window.location.href = '/Login';
-                }}
-              >
-                <BiLogOut size={18} className="me-1" /> Logout
-              </Button>
+        <Button
+      variant="light"
+      size="sm"
+      className="d-flex align-items-center"
+      onClick={handleLogout}
+    >
+      <BiLogOut size={18} className="me-1" /> Logout
+    </Button>
             </Nav>
           </Navbar.Collapse>
         </Container>

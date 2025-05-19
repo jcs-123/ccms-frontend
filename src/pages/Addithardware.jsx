@@ -261,10 +261,19 @@ function Addithardware() {
                 <Form.Label>Department <span className="text-danger">*</span></Form.Label>
                 <Form.Select name="department" value={formData.department || ""} onChange={handleInputChange}>
                   <option value="">--- Select Department ---</option>
-                  <option value="TBI">TBI</option>
-                  <option value="Office">Office</option>
-                  <option value="Research And Development">Research And Development</option>
-                  <option value="Computer Centre">Computer Centre</option>
+                <option value="CSE">CSE</option>
+<option value="CC">CC</option>
+<option value="Library">Library</option>
+<option value="EEE">EEE</option>
+<option value="ECE">ECE</option>
+<option value="ME">ME</option>
+<option value="MR">MR</option>
+<option value="CY">CY</option>
+<option value="AD">AD</option>
+<option value="TBI">TBI</option>
+<option value="Office">Office</option>
+<option value="Research And Development">Research And Development</option>
+
                 </Form.Select>
               </Form.Group>
             </Col>
