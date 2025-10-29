@@ -43,6 +43,9 @@ export const addspoc = async (reqBody) => {
     return await commonapi('POST', `${serverurl}/add-spoc`, reqBody);
   };
   
+  export const bulkUploadSpocs = async (spocsData) => {
+  return await commonapi('POST', `${serverurl}/bulk-add`, { users: spocsData });
+};
   export const getSpocUsers = async () => {
     return await commonapi('GET', `${serverurl}/get-spoc-users`);
   };

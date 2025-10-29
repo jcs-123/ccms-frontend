@@ -176,27 +176,34 @@ const visibleReports = reports.filter((item) => {
     const file = new Blob([excelBuffer], { type: "application/octet-stream" });
     saveAs(file, "Assigned_Reports.xlsx");
   };
+const handleSaveRemarks = async () => {
+  if (!selectedReport || !remarkText.trim()) {
+    toast.info("Please enter remarks before saving.");
+    return;
+  }
 
-  const handleSaveRemarks = () => {
-    if (!selectedReport) return;
-
-    const payload = {
-      ticketNo: selectedReport.ticketNo,
-      status: remarkStatus,
-      remarks: remarkText,
-    };
-
-    // Replace with your real endpoint:
-    axios
-      .post("https://ccms-server.onrender.com/update-cc-remarks", payload)
-      .then(() => {
-        alert("Remarks updated successfully.");
-        setShowRemarkModal(false);
-      })
-      .catch(() => {
-        alert("Failed to update remarks.");
-      });
-  };
+  try {
+    const res = await axios.post(
+      `https://ccms-server.onrender.com/update-status-remark/${selectedReport.ticketNo}`,
+      {
+        status: remarkStatus,
+        complaintremark: remarkText,
+      }
+    );
+    
+    toast.success("Remark and status updated successfully.");
+    setShowRemarkModal(false);
+    setRemarkText("");
+    setRemarkStatus("Assigned");
+    
+    // Refresh reports
+    const refreshed = await axios.get("https://ccms-server.onrender.com/get-cccomplaint");
+    setReports(Array.isArray(refreshed.data) ? refreshed.data : []);
+  } catch (err) {
+    toast.error("Failed to update remark/status");
+    console.error(err);
+  }
+};
 
   return (
     <Container fluid className="py-4">
@@ -465,36 +472,11 @@ const visibleReports = reports.filter((item) => {
       Close
     </Button>
     <Button
-      variant="primary"
-      onClick={async () => {
-        if (!remarkText.trim()) {
-          toast.info("Please enter remarks before saving.");
-          return;
-        }
-
-        try {
-          const res = await axios.post(
-            `http://localhost:4000/update-status-remark/${selectedReport.ticketNo}`,
-            {
-              status: remarkStatus,
-              complaintremark: remarkText,
-            }
-          );
-         toast.success("Remark and status updated successfully.");
-          setShowRemarkModal(false);
-          setRemarkText("");
-          setRemarkStatus("Assigned");
-          // Refresh reports
-          const refreshed = await axios.get("http://localhost:4000/get-cccomplaint");
-          setReports(Array.isArray(refreshed.data) ? refreshed.data : []);
-        } catch (err) {
-          toast.warning("Failed to update remark/status");
-          console.error(err);
-        }
-      }}
-    >
-      Save Remarks
-    </Button>
+  variant="primary"
+  onClick={handleSaveRemarks}
+>
+  Save Remarks
+</Button>
 
   </Modal.Footer>
 

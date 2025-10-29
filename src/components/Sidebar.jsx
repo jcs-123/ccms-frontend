@@ -92,12 +92,14 @@ function SidebarContent({ dropdownOpen, setDropdownOpen, role, closeSidebar }) {
               <Nav.Link as={Link} to="/inventary" className="px-3 py-2 rounded dropdown-item" onClick={closeSidebar}>
                 ➤ Inventory Report
               </Nav.Link>
-
-              {role === 'admin' && (
-                <>
-                  <Nav.Link as={Link} to="/addhardware" className="px-3 py-2 rounded dropdown-item" onClick={closeSidebar}>
+ <Nav.Link as={Link} to="/addhardware" className="px-3 py-2 rounded dropdown-item" onClick={closeSidebar}>
                     ➤ Add IT Hardware
                   </Nav.Link>
+              {role === 'admin' && (
+                <>
+                  {/* <Nav.Link as={Link} to="/addhardware" className="px-3 py-2 rounded dropdown-item" onClick={closeSidebar}>
+                    ➤ Add IT Hardware
+                  </Nav.Link> */}
                   <Nav.Link as={Link} to="/ithardwarecomplaintreport" className="px-3 py-2 rounded dropdown-item" onClick={closeSidebar}>
                     ➤ IT Complaint Report
                   </Nav.Link>

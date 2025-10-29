@@ -38,8 +38,8 @@ const departmentOptions = [
   'Office',
   'Research And Development'
 ];
-const amcVendorOptions = ['HALCYON', 'ACCEL', 'ACER/PC CLINIC ','ARTECH','FRONTIER','HP','PC CLINIC','TELECOM','VERTEX','ZETA'];
-const osOptions = ['Windows 10', 'Windows 7', 'Windows XP','Windows 8','Ubuntu 16','Ubuntu 18','JOSS','TCS ion'];
+const amcVendorOptions = ['HALCYON', 'ACCEL', 'ACER/PC CLINIC ','ARTECH','FRONTIER','HP','PC CLINIC','TELECOM','VERTEX','ZETA','Waves Technologies','Dominant Systems','Digital World','Legendary Distributors','Liageorson'];
+const osOptions = ['Windows 10', 'Windows 7', 'Windows XP','Windows 8','Ubuntu 16','Ubuntu 18','JOSS','TCS ion','Windows 11',' Ubuntu 24','Ubuntu 22',' Windows11& Ubuntu 24','Ubuntu 25'];
 const [spocOptions, setSpocOptions] = useState([]);
 
 
@@ -186,8 +186,14 @@ const [editItem, setEditItem] = useState({});
         if (userRole === 'admin') {
           setData(result.data); // Admin: all data
         } else {
-          const filteredData = result.data.filter(item => item.spoc === userName); // Normal user: only own SPOC data
-          setData(filteredData);
+        const filteredData = result.data.filter(item => {
+  const spocName = (item.spoc || "").trim().toLowerCase();
+  const loggedName = (userName || "").trim().toLowerCase();
+  return spocName === loggedName;
+});
+
+setData(filteredData);
+
         }
       }
     } catch (error) {

@@ -335,6 +335,11 @@ function Addithardware() {
                   <option value="TELECOM">TELECOM</option>
                   <option value="VERTEX">VERTEX</option>
                   <option value="ZETA">ZETA</option>
+                    <option value="Waves_Tech">Waves Technologies</option>
+  <option value="Dominant_Systems">Dominant Systems</option>
+  <option value="Digital_World">Digital World</option>
+  <option value="ACCEL">Legendary Distributors</option>
+  <option value="Liageorson">Liageorson</option>
                 </Form.Select>
               </Form.Group>
             </Col>
@@ -353,6 +358,11 @@ function Addithardware() {
                   <option value="Ubuntu 18">Ubuntu 18</option>
                   <option value="JOSS">JOSS</option>
                   <option value="TCS ion">TCS ion</option>
+                    <option value="windows_11">Windows 11</option>
+  <option value="ubuntu 24">Ubuntu 24</option>
+  <option value="ubuntu 22">Ubuntu 22</option>
+  <option value="Windows 11 & Ubuntu2">Windows11 & Ubuntu24</option>
+  <option value="Ubuntu 25">Ubuntu25</option>
                 </Form.Select>
               </Form.Group>
             </Col>
