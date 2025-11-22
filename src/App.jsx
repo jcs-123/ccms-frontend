@@ -9,6 +9,7 @@ import Ithardwarecomplaintreport from './pages/Ithardwarecomplaintreport';
 import AddSpoc from './pages/AddSpoc';
 import Login from './pages/Login';
 import Ccassignedreports from './pages/Ccassignedreports';
+import DeleteHardwareList from './pages/DeleteHardwareList';
 
 function App() {
   const location = useLocation();
@@ -30,6 +31,8 @@ function App() {
               <Route path="/ithardwarecomplaintreport" element={<Ithardwarecomplaintreport />} />
               <Route path="/Addspoc" element={<AddSpoc />} />
               <Route path="/Assignedreport" element={<Ccassignedreports />} />
+                            <Route path="/Delete" element={<DeleteHardwareList/>} />
+
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </div>
