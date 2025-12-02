@@ -7,7 +7,6 @@ import {
   Row,
   Col,
   Spinner,
-  InputGroup,
 } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,9 +20,9 @@ function DeleteHardwareBySpoc() {
   const [selectedSpoc, setSelectedSpoc] = useState("");
   const [singleJeccId, setSingleJeccId] = useState("");
 
-  // =======================================================
+  // ---------------------------------------------
   // Fetch hardware list
-  // =======================================================
+  // ---------------------------------------------
   const fetchData = async () => {
     try {
       const res = await axios.get(`${API_URL}/get-data`);
@@ -39,14 +38,14 @@ function DeleteHardwareBySpoc() {
     fetchData();
   }, []);
 
-  // =======================================================
-  // Unique SPOC list
-  // =======================================================
+  // ---------------------------------------------
+  // Unique SPOC List
+  // ---------------------------------------------
   const spocList = [...new Set(data.map((item) => item.spoc))];
 
-  // =======================================================
-  // Filter hardware by search or spoc
-  // =======================================================
+  // ---------------------------------------------
+  // Filtered Data
+  // ---------------------------------------------
   const filteredData = useMemo(() => {
     const q = search.toLowerCase();
 
@@ -58,22 +57,17 @@ function DeleteHardwareBySpoc() {
         item.locationid?.toLowerCase().includes(q) ||
         item.spoc?.toLowerCase().includes(q);
 
-      const matchSpoc = selectedSpoc
-        ? item.spoc === selectedSpoc
-        : true;
+      const matchSpoc = selectedSpoc ? item.spoc === selectedSpoc : true;
 
       return matchSearch && matchSpoc;
     });
   }, [data, search, selectedSpoc]);
 
-  // =======================================================
-  // Delete All Hardware by SPOC
-  // =======================================================
+  // ---------------------------------------------
+  // Delete All by SPOC
+  // ---------------------------------------------
   const deleteAllBySpoc = async () => {
-    if (!selectedSpoc) {
-      toast.warning("Select a SPOC");
-      return;
-    }
+    if (!selectedSpoc) return toast.warning("Select a SPOC");
 
     if (!window.confirm(`Delete ALL hardware under ${selectedSpoc}?`)) return;
 
@@ -86,26 +80,18 @@ function DeleteHardwareBySpoc() {
     }
   };
 
-  // =======================================================
-  // Delete Single by SPOC + JECCID
-  // =======================================================
+  // ---------------------------------------------
+  // Delete One Record
+  // ---------------------------------------------
   const deleteOne = async () => {
     if (!selectedSpoc || !singleJeccId) {
-      toast.warning("Select SPOC and enter JECC ID");
-      return;
+      return toast.warning("Select SPOC & enter JECC ID");
     }
 
     try {
-      await axios.delete(
-        `${API_URL}/hardware/delete-one`,
-        {
-          params: {
-            spoc: selectedSpoc,
-            jeccid: singleJeccId,
-          },
-        }
-      );
-
+      await axios.delete(`${API_URL}/hardware/delete-one`, {
+        params: { spoc: selectedSpoc, jeccid: singleJeccId },
+      });
       toast.success("One hardware deleted successfully");
       setSingleJeccId("");
       fetchData();
@@ -114,14 +100,11 @@ function DeleteHardwareBySpoc() {
     }
   };
 
-  // =======================================================
-  // Delete All (Bulk) for SPOC
-  // =======================================================
+  // ---------------------------------------------
+  // Bulk Delete by SPOC
+  // ---------------------------------------------
   const bulkDelete = async () => {
-    if (!selectedSpoc) {
-      toast.warning("Select a SPOC first");
-      return;
-    }
+    if (!selectedSpoc) return toast.warning("Select a SPOC first");
 
     if (!window.confirm(`Delete ALL items under ${selectedSpoc}?`)) return;
 
@@ -129,7 +112,6 @@ function DeleteHardwareBySpoc() {
       await axios.post(`${API_URL}/hardware/delete-spoc-bulk`, {
         spoc: selectedSpoc,
       });
-
       toast.success("Bulk delete completed");
       fetchData();
     } catch {
@@ -137,9 +119,9 @@ function DeleteHardwareBySpoc() {
     }
   };
 
-  // =======================================================
+  // ---------------------------------------------
   // UI
-  // =======================================================
+  // ---------------------------------------------
   return (
     <div className="container mt-4">
       <ToastContainer position="top-right" autoClose={1500} />
@@ -148,9 +130,9 @@ function DeleteHardwareBySpoc() {
         Hardware Delete – Based on SPOC
       </h3>
 
-      {/* SPOC Select + Actions */}
-      <Row className="mb-4">
-        <Col md={3}>
+      {/* SPOC Select + Delete Buttons */}
+      <Row className="mb-4 filter-row">
+        <Col xs={12} md={3} className="stack-mobile">
           <Form.Select
             value={selectedSpoc}
             onChange={(e) => setSelectedSpoc(e.target.value)}
@@ -164,7 +146,7 @@ function DeleteHardwareBySpoc() {
           </Form.Select>
         </Col>
 
-        <Col md={3}>
+        <Col xs={12} md={3} className="stack-mobile">
           <Button
             variant="danger"
             className="w-100"
@@ -175,7 +157,7 @@ function DeleteHardwareBySpoc() {
           </Button>
         </Col>
 
-        <Col md={3}>
+        <Col xs={12} md={3}>
           <Button
             variant="warning"
             className="w-100"
@@ -187,9 +169,9 @@ function DeleteHardwareBySpoc() {
         </Col>
       </Row>
 
-      {/* Delete One By SPOC + JECC ID */}
+      {/* Delete ONE */}
       <Row className="mb-3">
-        <Col md={3}>
+        <Col xs={12} md={3} className="stack-mobile">
           <Form.Control
             type="text"
             placeholder="Enter JECC ID"
@@ -197,7 +179,8 @@ function DeleteHardwareBySpoc() {
             onChange={(e) => setSingleJeccId(e.target.value)}
           />
         </Col>
-        <Col md={3}>
+
+        <Col xs={12} md={3}>
           <Button
             className="w-100"
             variant="outline-danger"
@@ -210,8 +193,8 @@ function DeleteHardwareBySpoc() {
       </Row>
 
       {/* Search */}
-      <Row className="mb-3">
-        <Col md={4}>
+      <Row className="mb-3 filter-row">
+        <Col xs={12} md={4}>
           <Form.Control
             type="text"
             placeholder="Search JECC / Dept / Brand / SPOC / Location"
@@ -221,62 +204,64 @@ function DeleteHardwareBySpoc() {
         </Col>
       </Row>
 
-      {/* Loader */}
+      {/* Table */}
       {loading ? (
         <div className="text-center p-4">
           <Spinner animation="border" />
           <p>Loading hardware...</p>
         </div>
       ) : (
-        <Table bordered hover responsive>
-          <thead className="table-dark">
-            <tr>
-              <th>JECC ID</th>
-              <th>CPU</th>
-              <th>Monitor</th>
-              <th>Keyboard</th>
-              <th>Mouse</th>
-              <th>Brand</th>
-              <th>Dept</th>
-              <th>Room</th>
-              <th>SPOC</th>
-              <th>Status</th>
-              <th>AMC</th>
-              <th>Vendor</th>
-              <th>Location</th>
-              <th>Purchased</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {filteredData.length === 0 ? (
+        <div className="table-wrapper">
+          <Table bordered hover>
+            <thead className="table-dark">
               <tr>
-                <td colSpan="14" className="text-center">
-                  No matching results
-                </td>
+                <th>JECC ID</th>
+                <th>CPU</th>
+                <th>Monitor</th>
+                <th>Keyboard</th>
+                <th>Mouse</th>
+                <th>Brand</th>
+                <th>Dept</th>
+                <th>Room</th>
+                <th>SPOC</th>
+                <th>Status</th>
+                <th>AMC</th>
+                <th>Vendor</th>
+                <th>Location</th>
+                <th>Purchased</th>
               </tr>
-            ) : (
-              filteredData.map((item) => (
-                <tr key={item._id}>
-                  <td>{item.jeccid}</td>
-                  <td>{item.cpusino}</td>
-                  <td>{item.monitorsino}</td>
-                  <td>{item.keyboardsino}</td>
-                  <td>{item.mousesino}</td>
-                  <td>{item.brand}</td>
-                  <td>{item.department}</td>
-                  <td>{item.room}</td>
-                  <td>{item.spoc}</td>
-                  <td>{item.status}</td>
-                  <td>{item.amcexpdata}</td>
-                  <td>{item.amcvendor}</td>
-                  <td>{item.locationid}</td>
-                  <td>{item.purchasedon}</td>
+            </thead>
+
+            <tbody>
+              {filteredData.length === 0 ? (
+                <tr>
+                  <td colSpan="14" className="text-center">
+                    No matching results
+                  </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </Table>
+              ) : (
+                filteredData.map((item) => (
+                  <tr key={item._id}>
+                    <td>{item.jeccid}</td>
+                    <td>{item.cpusino}</td>
+                    <td>{item.monitorsino}</td>
+                    <td>{item.keyboardsino}</td>
+                    <td>{item.mousesino}</td>
+                    <td>{item.brand}</td>
+                    <td>{item.department}</td>
+                    <td>{item.room}</td>
+                    <td>{item.spoc}</td>
+                    <td>{item.status}</td>
+                    <td>{item.amcexpdata}</td>
+                    <td>{item.amcvendor}</td>
+                    <td>{item.locationid}</td>
+                    <td>{item.purchasedon}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </Table>
+        </div>
       )}
     </div>
   );
